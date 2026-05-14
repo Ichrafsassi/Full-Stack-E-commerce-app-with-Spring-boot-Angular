@@ -1,0 +1,86 @@
+<section class="space-y-6">
+  <div>
+    <p class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">My Account</p>
+    <h1 class="text-4xl font-black">Profile and recent orders</h1>
+    <p class="mt-2 text-base-content/70">
+      This page uses the authenticated backend endpoint and combines it with local demo orders.
+    </p>
+  </div>
+
+  @if (error) {
+    <div class="alert alert-error">
+      <span>{{ error }}</span>
+    </div>
+  }
+
+  <div class="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+    <div class="rounded-3xl bg-base-200 p-6">
+      @if (loading) {
+        <span class="loading loading-spinner loading-lg"></span>
+      } @else if (user) {
+        <div class="space-y-4">
+          <div class="avatar placeholder">
+            <div class="w-20 rounded-full bg-primary text-primary-content">
+              <span class="text-2xl">{{ user.firstName.charAt(0) }}{{ user.lastName.charAt(0) }}</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="text-sm text-base-content/60">Signed in as</div>
+            <div class="text-2xl font-bold">{{ user.firstName }} {{ user.lastName }}</div>
+            <div>{{ user.email }}</div>
+          </div>
+
+          <div class="badge badge-primary badge-outline">{{ user.role }}</div>
+
+          <div class="pt-3">
+            <a class="btn btn-primary" [routerLink]="['/products']">Shop more</a>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold">Recent orders</h2>
+        <a class="btn btn-outline btn-sm" [routerLink]="['/checkout']">New order</a>
+      </div>
+
+      @if (orders.length === 0) {
+        <div class="rounded-3xl border border-dashed border-base-300 p-10 text-center">
+          <h3 class="text-xl font-bold">No orders yet</h3>
+          <p class="mt-2 text-base-content/70">
+            Complete a checkout and your order history will appear here.
+          </p>
+        </div>
+      } @else {
+        @for (order of orders; track order.id) {
+          <article class="rounded-3xl bg-base-100 p-5 shadow">
+            <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+              <div>
+                <div class="text-sm text-base-content/60">{{ order.createdAt | date: 'medium' }}</div>
+                <div class="text-xl font-bold">{{ order.id }}</div>
+              </div>
+
+              <div class="badge badge-success badge-outline">Paid</div>
+            </div>
+
+            <div class="mt-4 grid gap-2 text-sm text-base-content/70">
+              @for (item of order.items; track item.productId) {
+                <div class="flex justify-between">
+                  <span>{{ item.productName }} x{{ item.quantity }}</span>
+                  <span>{{ item.lineTotal | currency }}</span>
+                </div>
+              }
+            </div>
+
+            <div class="mt-4 flex items-center justify-between border-t border-base-200 pt-4 font-semibold">
+              <span>Total</span>
+              <span>{{ order.total | currency }}</span>
+            </div>
+          </article>
+        }
+      }
+    </div>
+  </div>
+</section>

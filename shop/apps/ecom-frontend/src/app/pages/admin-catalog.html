@@ -1,0 +1,153 @@
+<section class="space-y-6">
+  <div class="flex flex-col gap-4 rounded-3xl bg-base-200 p-6 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Admin Console</p>
+      <h1 class="text-4xl font-black">Manage Catalog</h1>
+      <p class="mt-2 text-base-content/70">
+        Add and remove product categories and manage your product inventory.
+      </p>
+    </div>
+    <button class="btn btn-outline" (click)="reload()" [disabled]="loading">Refresh</button>
+  </div>
+
+  @if (error) {
+    <div class="alert alert-error">
+      <span>{{ error }}</span>
+    </div>
+  }
+
+  <div class="grid gap-6 md:grid-cols-2">
+    <div class="rounded-3xl bg-base-100 p-6 shadow">
+      <h2 class="mb-4 text-2xl font-bold">Categories</h2>
+      <form [formGroup]="categoryForm" (ngSubmit)="createCategory()" class="mb-4 flex gap-2">
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Category name"
+          class="input input-bordered flex-1"
+          [class.input-error]="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched"
+        />
+        <button type="submit" class="btn btn-primary" [disabled]="loading">Add</button>
+      </form>
+      <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (cat of categories; track cat.id) {
+              <tr>
+                <td class="font-medium">{{ cat.name }}</td>
+                <td class="text-right">
+                  <button
+                    class="btn btn-sm btn-error"
+                    (click)="deleteCategory(cat.id)"
+                    [disabled]="loading"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="rounded-3xl bg-base-100 p-6 shadow">
+      <h2 class="mb-4 text-2xl font-bold">Products</h2>
+      <form [formGroup]="productForm" (ngSubmit)="createProduct()" class="mb-4 space-y-3">
+        <div class="grid gap-3 sm:grid-cols-2">
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Product name"
+            class="input input-bordered"
+            [class.input-error]="productForm.get('name')?.invalid && productForm.get('name')?.touched"
+          />
+          <select
+            formControlName="categoryId"
+            class="select select-bordered"
+            [class.select-error]="productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched"
+          >
+            @for (cat of categories; track cat.id) {
+              <option [value]="cat.id">{{ cat.name }}</option>
+            }
+          </select>
+        </div>
+        <textarea
+          formControlName="description"
+          placeholder="Description"
+          class="textarea textarea-bordered"
+          [class.textarea-error]="productForm.get('description')?.invalid && productForm.get('description')?.touched"
+        ></textarea>
+        <div class="grid gap-3 sm:grid-cols-3">
+          <input
+            type="number"
+            formControlName="price"
+            placeholder="Price"
+            class="input input-bordered"
+            [class.input-error]="productForm.get('price')?.invalid && productForm.get('price')?.touched"
+          />
+          <input
+            type="number"
+            formControlName="stock"
+            placeholder="Stock"
+            class="input input-bordered"
+            [class.input-error]="productForm.get('stock')?.invalid && productForm.get('stock')?.touched"
+          />
+          <input
+            type="text"
+            formControlName="size"
+            placeholder="Size (optional)"
+            class="input input-bordered"
+          />
+        </div>
+        <input
+          type="text"
+          formControlName="imageUrl"
+          placeholder="Image URL (optional)"
+          class="input input-bordered"
+        />
+        <button type="submit" class="btn btn-primary w-full" [disabled]="loading">Add Product</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="rounded-3xl bg-base-100 p-6 shadow">
+    <h2 class="mb-4 text-2xl font-bold">Product List</h2>
+    <div class="overflow-x-auto">
+      <table class="table table-zebra w-full">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of products; track product.id) {
+            <tr>
+              <td class="font-medium">{{ product.name }}</td>
+              <td>{{ product.price | currency }}</td>
+              <td>{{ product.stock }}</td>
+              <td class="text-right">
+                <button
+                  class="btn btn-sm btn-error"
+                  (click)="deleteProduct(product.id)"
+                  [disabled]="loading"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
