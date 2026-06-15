@@ -1,0 +1,76 @@
+
+    <div class="checkout-layout">
+      <div class="checkout-main">
+        <h1 class="neo-page-title">Secure Quantum Checkout</h1>
+        
+        <div class="neo-card checkout-card">
+          <header class="card-header">
+            <h3>Shipping & Payment Authorization</h3>
+          </header>
+          
+          <form (ngSubmit)="submit()" class="checkout-form">
+            @if (error()) {
+              <div class="err-box">{{ error() }}</div>
+            }
+            
+            <div class="form-group">
+              <label for="address">Shipping Destination</label>
+              <textarea id="address" [(ngModel)]="address" name="address" required rows="3" class="neo-input" placeholder="Enter your full physical address..."></textarea>
+            </div>
+            
+            <div class="payment-method-selector">
+              <label class="payment-option">
+                <input type="checkbox" [(ngModel)]="useStripe" name="stripe" class="neo-checkbox" />
+                <div class="option-details">
+                  <span class="option-title">Simulate Stripe Payment Gateway</span>
+                  <span class="option-desc">Autodebits virtual credits & sets order status to PAID instantly.</span>
+                </div>
+              </label>
+            </div>
+
+            <div class="action-bar">
+              <a routerLink="/cart" class="neo-btn ghost">← Back to Cart</a>
+              <button type="submit" class="neo-btn primary" [disabled]="loading() || !address.trim() || !cart()?.items?.length">
+                {{ loading() ? 'Authorizing Order...' : 'Confirm & Transmit Order' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Order Summary Sidebar -->
+      <aside class="checkout-sidebar">
+        <div class="neo-card summary-card">
+          <h3>Order Spec</h3>
+          
+          @if (cart(); as c) {
+            <div class="summary-items">
+              @for (item of c.items; track item.id) {
+                <div class="summary-item">
+                  <span class="item-name">{{ item.productName }} <strong class="qty">×{{ item.quantity }}</strong></span>
+                  <span class="item-total">{{ item.lineTotal | currency }}</span>
+                </div>
+              }
+            </div>
+            
+            <div class="calc-table">
+              <div class="calc-row">
+                <span>Hardware Subtotal:</span>
+                <span>{{ c.total | currency }}</span>
+              </div>
+              <div class="calc-row">
+                <span>Freight & Delivery:</span>
+                <span class="free">FREE</span>
+              </div>
+              <div class="calc-row total-row">
+                <span>Energy Total:</span>
+                <strong>{{ c.total | currency }}</strong>
+              </div>
+            </div>
+          } @else {
+            <p class="loading-text">Analyzing cart buffer...</p>
+          }
+        </div>
+      </aside>
+    </div>
+  

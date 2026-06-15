@@ -1,0 +1,68 @@
+
+    <div class="admin-panel">
+      <div class="panel-head">
+        <h2>Products</h2>
+        <button type="button" class="neo-btn primary" (click)="openCreate()">+ New product</button>
+      </div>
+      @if (flash()) {
+        <p class="admin-flash" [class.err]="flashErr()" [class.ok]="!flashErr()">{{ flash() }}</p>
+      }
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr><th></th><th>Name</th><th>Price</th><th>Stock</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody>
+            @for (p of products(); track p.id) {
+              <tr>
+                <td class="thumb">
+                  <app-product-image [src]="p.imageUrl" [alt]="p.name" />
+                </td>
+                <td>{{ p.name }}</td>
+                <td>{{ p.price | currency }}</td>
+                <td>{{ p.stock }}</td>
+                <td><span class="status" [class.off]="p.active === false">{{ p.active !== false ? 'Active' : 'Hidden' }}</span></td>
+                <td class="actions">
+                  <button type="button" class="btn-edit" (click)="openEdit(p)">Edit</button>
+                  <button type="button" [class]="p.active !== false ? 'btn-deactivate' : 'btn-activate'" (click)="toggleActive(p)">
+                    {{ p.active !== false ? 'Deactivate' : 'Activate' }}
+                  </button>
+                  <button type="button" class="btn-delete" (click)="del(p)">Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    @if (modalOpen()) {
+      <div class="modal-backdrop" (click)="closeModal()">
+        <div class="modal" (click)="$event.stopPropagation()">
+          <h3>{{ editingId ? 'Edit product' : 'New product' }}</h3>
+          <div class="preview">
+            <app-product-image [src]="previewUrl()" [alt]="form.name || 'Product'" />
+          </div>
+          <form class="modal-form" (ngSubmit)="save()">
+            <input class="neo-input" [(ngModel)]="form.name" name="name" placeholder="Name" required />
+            <textarea class="neo-input" [(ngModel)]="form.description" name="desc" rows="2" placeholder="Description"></textarea>
+            <div class="row">
+              <input class="neo-input" [(ngModel)]="form.price" name="price" type="number" step="0.01" placeholder="Price" required />
+              <input class="neo-input" [(ngModel)]="form.stock" name="stock" type="number" placeholder="Stock" required />
+            </div>
+            <input class="neo-input" [(ngModel)]="form.imageUrl" name="img" placeholder="Image URL (optional)" />
+            <select class="neo-select" [(ngModel)]="form.categoryId" name="cat">
+              <option [ngValue]="undefined">No category</option>
+              @for (c of categories(); track c.id) { <option [ngValue]="c.id">{{ c.name }}</option> }
+            </select>
+            <label class="check"><input type="checkbox" [(ngModel)]="form.active" name="act" /> Active in shop</label>
+            <div class="modal-actions">
+              <button type="button" class="neo-btn ghost" (click)="closeModal()">Cancel</button>
+              <button type="submit" class="neo-btn primary">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+  

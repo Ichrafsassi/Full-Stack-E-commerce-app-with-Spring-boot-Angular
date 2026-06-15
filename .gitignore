@@ -1,5 +1,37 @@
+# Auxly
+.auxly/
 
-.nx/installation
-.nx/cache
-.nx/workspace-data
-.nx/self-healing
+# Backend
+backend/target/
+backend/data/
+backend/*.log
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+!frontend/.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Duplicate / scratch copies
+_zipcheck/
+.dist/
+dist/
+.angular/
+.nx/cache/
+.nx/workspace-data/
+tmp/
+node_modules/
+dist/
+.angular/
+.nx/cache/
+.nx/workspace-data/
+tmp/

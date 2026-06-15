@@ -1,0 +1,85 @@
+
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <h1>{{ hero()?.title ?? "NERD'S TECH" }}</h1>
+      <p class="hero-body">{{ hero()?.body }}</p>
+      <div class="hero-actions">
+        <a routerLink="/products" class="neo-btn primary">Browse catalog</a>
+        <a routerLink="/deals" class="neo-btn">View deals</a>
+        <a routerLink="/builds" class="neo-btn ghost">Custom builds</a>
+      </div>
+    </section>
+
+    <section class="trust-strip">
+      <div class="trust-item"><span class="dot"></span><strong>24h dispatch</strong><span class="sub">In-stock EU hub</span></div>
+      <div class="trust-item"><span class="dot"></span><strong>Tech catalog</strong><span class="sub">GPUs, rigs, peripherals</span></div>
+      <div class="trust-item"><span class="dot"></span><strong>Verified pricing</strong><span class="sub">Transparent discounts</span></div>
+      <div class="trust-item"><span class="dot"></span><strong>Secure checkout</strong><span class="sub">JWT-protected API</span></div>
+    </section>
+
+    <section class="categories-strip">
+      @for (c of categories(); track c.id) {
+        <a class="cat-chip" [routerLink]="['/products']" [queryParams]="{ categoryId: c.id }">{{ c.name }}</a>
+      }
+    </section>
+
+    <section class="deals-preview">
+      <div class="section-head">
+        <h2 class="neo-page-title">Flash deals</h2>
+        <a routerLink="/deals" class="neo-btn ghost">All deals</a>
+      </div>
+      @if (deals()?.products?.length) {
+        <div class="neo-grid">
+          @for (p of deals()!.products.slice(0, 4); track p.id) {
+            <article class="neo-card">
+              <app-product-image [src]="p.imageUrl" [alt]="p.name" />
+              <div class="neo-card-body">
+                <h3>{{ p.name }}</h3>
+                <app-product-price [product]="p" />
+                <a [routerLink]="['/products', p.id]" class="neo-btn">View</a>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <p class="hint">Start the API: <code>cd backend && .\run.cmd</code> then refresh.</p>
+      }
+    </section>
+
+    <section class="features neo-grid">
+      <article class="neo-card feature-card">
+        <div class="neo-card-body">
+          <h3>Same-day dispatch</h3>
+          <p>In-stock gear ships fast from our EU fulfillment hub.</p>
+        </div>
+      </article>
+      <article class="neo-card feature-card">
+        <div class="neo-card-body">
+          <h3>Verified hardware</h3>
+          <p>Every SKU is tested — no gray-market surprises.</p>
+        </div>
+      </article>
+      <article class="neo-card feature-card">
+        <div class="neo-card-body">
+          <h3>Build configurator</h3>
+          <p>Mix GPUs, RAM, and cases — explore <a routerLink="/builds">custom builds</a>.</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="rec">
+      <h2 class="neo-page-title">Featured this week</h2>
+      <div class="neo-grid">
+        @for (p of featured(); track p.id) {
+          <article class="neo-card">
+            <app-product-image [src]="p.imageUrl" [alt]="p.name" />
+            <div class="neo-card-body">
+              <h3>{{ p.name }}</h3>
+              <app-product-price [product]="p" />
+              <a [routerLink]="['/products', p.id]" class="neo-btn">View specs</a>
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+  

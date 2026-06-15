@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: nerds-tech-ecommerce-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nerdstech
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8081
+
+app:
+  jwt:
+    secret: NerdsTech-Ecommerce-JWT-Secret-Key-Change-In-Production-Min256Bits!!
+    expiration-ms: 86400000
+  cors:
+    allowed-origins: http://localhost:4200
+  stripe:
+    enabled: false
+    secret-key: sk_test_placeholder
+  ai:
+    enabled: false
+  oauth:
+    google:
+      enabled: false
+
+logging:
+  level:
+    com.ichrafsassi: INFO

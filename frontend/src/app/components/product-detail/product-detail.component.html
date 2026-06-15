@@ -1,0 +1,29 @@
+
+    @if (error()) {
+      <p class="admin-flash err">{{ error() }}</p>
+    }
+    @if (flash()) {
+      <p class="admin-flash" [class.err]="flashErr()" [class.ok]="!flashErr()">{{ flash() }}</p>
+    }
+    @if (product(); as p) {
+      <article class="detail">
+        <div class="detail-media">
+          <app-product-image [src]="p.imageUrl" [alt]="p.name" />
+        </div>
+        <div class="detail-info neo-card">
+          <div class="neo-card-body">
+            @if (p.categoryName) { <span class="cat">{{ p.categoryName }}</span> }
+            <h1>{{ p.name }}</h1>
+            <p class="desc">{{ p.description }}</p>
+            <app-product-price [product]="p" />
+            <p class="stock">In stock: {{ p.stock }}</p>
+            @if (auth.isLoggedIn()) {
+              <button type="button" class="neo-btn primary" (click)="add()">Add to cart</button>
+            } @else {
+              <a routerLink="/login" class="neo-btn primary">Sign in to purchase</a>
+            }
+          </div>
+        </div>
+      </article>
+    }
+  

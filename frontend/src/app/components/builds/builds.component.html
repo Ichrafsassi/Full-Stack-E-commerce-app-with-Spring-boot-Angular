@@ -1,0 +1,16 @@
+
+    <h1 class="neo-page-title">{{ title() }}</h1>
+    <p class="sub">{{ subtitle() }}</p>
+    <div class="neo-grid">
+      @for (card of cards(); track card.title) {
+        <article class="neo-card">
+          <app-product-image [src]="img(card.imageSeed ?? card.title)" [alt]="card.title" />
+          <div class="neo-card-body">
+            <h3>{{ card.title }}</h3>
+            <p>{{ card.description }}</p>
+            <a routerLink="/products" [queryParams]="{ search: card.search ?? card.title }" class="neo-btn primary">View rigs</a>
+          </div>
+        </article>
+      }
+    </div>
+  

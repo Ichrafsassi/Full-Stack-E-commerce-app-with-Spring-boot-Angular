@@ -1,0 +1,36 @@
+
+    <div class="admin-panel">
+      <div class="panel-head">
+        <h2>Categories</h2>
+      </div>
+      @if (flash()) {
+        <p class="admin-flash" [class.err]="flashErr()" [class.ok]="!flashErr()">{{ flash() }}</p>
+      }
+      <form class="admin-form" (ngSubmit)="save()">
+        <input class="neo-input" [(ngModel)]="name" name="name" placeholder="Name" required />
+        <input class="neo-input" [(ngModel)]="description" name="desc" placeholder="Description" />
+        <input class="neo-input" [(ngModel)]="imageUrl" name="img" placeholder="Image URL (optional)" />
+        <div class="form-actions">
+          <button type="submit" class="neo-btn primary">{{ editId ? 'Update' : 'Add' }}</button>
+          @if (editId) { <button type="button" class="neo-btn ghost" (click)="cancel()">Cancel</button> }
+        </div>
+      </form>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Name</th><th>Description</th><th></th></tr></thead>
+          <tbody>
+            @for (c of categories(); track c.id) {
+              <tr>
+                <td>{{ c.name }}</td>
+                <td>{{ c.description }}</td>
+                <td class="actions">
+                  <button type="button" class="btn-edit" (click)="startEdit(c)">Edit</button>
+                  <button type="button" class="btn-delete" (click)="del(c)">Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  

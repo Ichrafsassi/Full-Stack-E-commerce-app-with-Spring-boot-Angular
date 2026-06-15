@@ -1,0 +1,94 @@
+.admin-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1.5rem;
+  min-height: calc(100vh - 3rem);
+}
+
+.admin-sidebar {
+  border: 1px solid var(--neo-border);
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
+  background: rgba(12, 15, 31, 0.85);
+  height: fit-content;
+  position: sticky;
+  top: 1.25rem;
+}
+
+.admin-sidebar .brand {
+  font-family: var(--neo-font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--neo-cyan);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.admin-nav a {
+  display: block;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--neo-muted) !important;
+  background: transparent !important;
+  border: 1px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.admin-nav a:hover {
+  color: var(--neo-text) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.admin-nav a.active {
+  color: var(--neo-cyan) !important;
+  background: rgba(0, 245, 255, 0.1) !important;
+  border-color: rgba(0, 245, 255, 0.35);
+}
+
+.admin-main {
+  min-width: 0;
+}
+
+.admin-flash {
+  padding: 0.65rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+}
+
+.admin-flash.err {
+  border: 1px solid rgba(248, 113, 113, 0.5);
+  background: rgba(248, 113, 113, 0.1);
+  color: #fca5a5;
+}
+
+.admin-flash.ok {
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  background: rgba(74, 222, 128, 0.08);
+  color: #86efac;
+}
+
+@media (max-width: 900px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+  .admin-sidebar {
+    position: static;
+  }
+  .admin-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

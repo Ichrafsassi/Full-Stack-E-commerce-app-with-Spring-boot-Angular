@@ -1,0 +1,46 @@
+
+    .panel-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .panel-head h2 { margin: 0; }
+    .thumb { width: 72px; padding: 0.25rem !important; }
+    .thumb app-product-image { display: block; border-radius: 6px; overflow: hidden; }
+    .thumb :host ::ng-deep .product-image { aspect-ratio: 1; border: none; }
+    .status { 
+      font-size: 0.75rem; 
+      padding: 0.25rem 0.6rem; 
+      border-radius: 9999px; 
+      font-weight: 600; 
+      text-transform: uppercase; 
+      letter-spacing: 0.02em; 
+      background: rgba(74,222,128,0.15); 
+      color: #86efac; 
+    }
+    .status.off { background: rgba(248,113,113,0.12); color: #fca5a5; }
+    .actions { display: flex; gap: 0.5rem; }
+    .actions button { 
+      padding: 0.35rem 0.75rem; 
+      border-radius: 6px; 
+      font-size: 0.85rem; 
+      cursor: pointer; 
+      border: 1px solid transparent;
+    }
+    .actions button:first-child { background: rgba(59,130,246,0.15); color: #93c5fd; border-color: rgba(59,130,246,0.3); }
+    .actions button:first-child:hover { background: rgba(59,130,246,0.25); }
+    .btn-deactivate { background: rgba(248,113,113,0.12); color: #fca5a5; border-color: rgba(248,113,113,0.3); }
+    .btn-deactivate:hover { background: rgba(248,113,113,0.25); }
+    .btn-activate { background: rgba(74,222,128,0.12); color: #86efac; border-color: rgba(74,222,128,0.3); }
+    .btn-activate:hover { background: rgba(74,222,128,0.25); }
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal {
+      width: min(520px, 100%); max-height: 90vh; overflow-y: auto;
+      background: #0c0f1f; border: 1px solid var(--neo-border); border-radius: 12px; padding: 1.5rem;
+    }
+    .modal h3 { margin: 0 0 1.25rem; font-size: 1.25rem; }
+    .preview { margin-bottom: 1rem; border-radius: 8px; overflow: hidden; max-height: 200px; }
+    .modal-form { display: flex; flex-direction: column; gap: 0.75rem; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .check { display: flex; align-items: center; gap: 0.35rem; font-size: 0.88rem; color: var(--neo-muted); }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; }
+  

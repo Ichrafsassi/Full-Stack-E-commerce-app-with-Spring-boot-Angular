@@ -1,0 +1,41 @@
+
+    <h1 class="neo-page-title">Tech Catalog</h1>
+    <p class="subtitle">Components · rigs · peripherals · networking</p>
+
+    @if (flash()) {
+      <p class="admin-flash" [class.err]="flashErr()" [class.ok]="!flashErr()">{{ flash() }}</p>
+    }
+
+    <div class="neo-filters">
+      <select class="neo-select" [(ngModel)]="categoryId" (ngModelChange)="load()">
+        <option [ngValue]="undefined">All categories</option>
+        @for (c of categories(); track c.id) {
+          <option [ngValue]="c.id">{{ c.name }}</option>
+        }
+      </select>
+      <input class="neo-input" [(ngModel)]="search" (keyup.enter)="load()" placeholder="Search GPUs, keyboards..." />
+      <button type="button" class="neo-btn primary" (click)="load()">Scan</button>
+      <a routerLink="/deals" class="neo-btn">View deals</a>
+    </div>
+
+    <div class="neo-grid">
+      @for (p of products(); track p.id) {
+        <article class="neo-card">
+          <app-product-image [src]="p.imageUrl" [alt]="p.name" />
+          <div class="neo-card-body">
+            @if (p.categoryName) { <span class="badge">{{ p.categoryName }}</span> }
+            <h3>{{ p.name }}</h3>
+            <app-product-price [product]="p" />
+            <div class="actions">
+              <a [routerLink]="['/products', p.id]" class="neo-btn">Details</a>
+              @if (auth.isLoggedIn()) {
+                <button type="button" class="neo-btn primary" (click)="addToCart(p.id)">+ Cart</button>
+              }
+            </div>
+          </div>
+        </article>
+      } @empty {
+        <p class="empty">No gear found. Try another category or search term.</p>
+      }
+    </div>
+  

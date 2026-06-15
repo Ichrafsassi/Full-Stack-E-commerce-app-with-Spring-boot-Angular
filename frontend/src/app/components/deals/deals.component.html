@@ -1,0 +1,50 @@
+
+    <h1 class="neo-page-title">Neo Deals</h1>
+    <p class="sub">{{ deals()?.message ?? 'Loading deals…' }}</p>
+    @if (flash()) {
+      <p class="admin-flash" [class.err]="flashErr()" [class.ok]="!flashErr()">{{ flash() }}</p>
+    }
+
+    @if (loadError()) {
+      <div class="neo-card empty-state">
+        <div class="neo-card-body">
+          <p>Could not reach the API. Run the backend first:</p>
+          <code>cd backend && .\mvnw.cmd spring-boot:run</code>
+        </div>
+      </div>
+    } @else if (deals(); as d) {
+      @if (d.products.length) {
+        <div class="summary neo-card">
+          <div class="neo-card-body">
+            <span>{{ d.dealCount }} active deals</span>
+            <span class="highlight">Total savings up to {{ d.totalPotentialSavings | currency }}</span>
+            <span class="formula">sale = original × (1 − discount% ÷ 100)</span>
+          </div>
+        </div>
+        <div class="neo-grid">
+          @for (p of d.products; track p.id) {
+            <article class="neo-card deal-card">
+              <app-product-image [src]="p.imageUrl" [alt]="p.name" />
+              <div class="neo-card-body">
+                <h3>{{ p.name }}</h3>
+                <app-product-price [product]="p" />
+                <div class="actions">
+                  <a [routerLink]="['/products', p.id]" class="neo-btn">Specs</a>
+                  @if (auth.isLoggedIn()) {
+                    <button type="button" class="neo-btn primary" (click)="add(p.id)">+ Cart</button>
+                  }
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="neo-card empty-state">
+          <div class="neo-card-body">
+            <p>No deals yet. Restart the backend to run the catalog migration (discounts apply on startup).</p>
+            <a routerLink="/products" class="neo-btn primary">Browse catalog</a>
+          </div>
+        </div>
+      }
+    }
+  

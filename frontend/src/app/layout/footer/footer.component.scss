@@ -1,0 +1,84 @@
+.site-footer {
+  margin-top: auto;
+  padding: 2.5rem clamp(1rem, 3vw, 2rem) 1.25rem;
+  border-top: 1px solid var(--neo-border);
+  background: linear-gradient(180deg, transparent, rgba(8, 12, 28, 0.95));
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1280px;
+  margin: 0 auto 2rem;
+}
+
+.footer-brand .mark {
+  color: var(--neo-magenta);
+  font-weight: 700;
+  margin-right: 0.35rem;
+}
+
+.footer-brand .name {
+  font-family: var(--neo-font-display);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--neo-text);
+}
+
+.footer-brand .tagline {
+  margin: 0.75rem 0 0;
+  max-width: 28ch;
+  font-size: 0.85rem;
+  color: var(--neo-muted);
+  line-height: 1.5;
+}
+
+.footer-col h4 {
+  margin: 0 0 0.75rem;
+  font-family: var(--neo-font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--neo-cyan);
+}
+
+.footer-col a {
+  display: block;
+  color: var(--neo-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  padding: 0.2rem 0;
+  transition: color 0.15s;
+
+  &:hover {
+    color: var(--neo-text);
+  }
+}
+
+.footer-bottom {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(30, 58, 95, 0.5);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--neo-muted);
+}
+
+.sep {
+  opacity: 0.4;
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}

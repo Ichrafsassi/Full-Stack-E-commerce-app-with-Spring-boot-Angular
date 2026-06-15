@@ -1,0 +1,31 @@
+
+    <div class="admin-panel">
+      <h2>Dashboard</h2>
+      <p class="sub">Store overview — NERD'S TECH</p>
+      <div class="metrics">
+        <article class="metric-card">
+          <span class="metric-label">Products</span>
+          <strong class="metric-value">{{ productCount() }}</strong>
+          <a routerLink="/admin/products" class="neo-btn ghost">Manage</a>
+        </article>
+        <article class="metric-card">
+          <span class="metric-label">Categories</span>
+          <strong class="metric-value">{{ categoryCount() }}</strong>
+          <a routerLink="/admin/categories" class="neo-btn ghost">Manage</a>
+        </article>
+        <article class="metric-card">
+          <span class="metric-label">Orders</span>
+          <strong class="metric-value">{{ orderCount() }}</strong>
+          <a routerLink="/admin/orders" class="neo-btn ghost">View</a>
+        </article>
+        <article class="metric-card">
+          <span class="metric-label">Users</span>
+          <strong class="metric-value">{{ userCount() }}</strong>
+          <a routerLink="/admin/users" class="neo-btn ghost">Manage</a>
+        </article>
+      </div>
+      @if (recentRevenue() > 0) {
+        <p class="revenue">Order revenue (all time): <strong>{{ recentRevenue() | currency }}</strong></p>
+      }
+    </div>
+  

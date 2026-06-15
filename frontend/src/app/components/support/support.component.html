@@ -1,0 +1,18 @@
+
+    <h1 class="neo-page-title">{{ title() }}</h1>
+    <div class="neo-grid">
+      @for (card of cards(); track card.title) {
+        <article class="neo-card">
+          <div class="neo-card-body">
+            <h3>{{ card.title }}</h3>
+            <p>
+              {{ card.description }}
+              @if (card.link) {
+                <a [routerLink]="card.link">Learn more</a>
+              }
+            </p>
+          </div>
+        </article>
+      }
+    </div>
+  

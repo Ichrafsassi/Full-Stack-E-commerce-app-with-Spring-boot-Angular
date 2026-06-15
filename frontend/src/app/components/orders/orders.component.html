@@ -1,0 +1,27 @@
+
+    <h1 class="neo-page-title">Order history</h1>
+    @if (error()) {
+      <p class="admin-flash err">{{ error() }}</p>
+    }
+    @if (loading()) {
+      <p>Loading orders…</p>
+    }
+    @for (o of orders(); track o.id) {
+      <article class="order">
+        <header>
+          <strong>#{{ o.id }}</strong>
+          <span>{{ o.status }}</span>
+          <span>{{ o.createdAt | date:'medium' }}</span>
+        </header>
+        <p>{{ o.shippingAddress }}</p>
+        <ul>
+          @for (i of o.items; track i.productId) {
+            <li>{{ i.productName }} × {{ i.quantity }} — {{ i.lineTotal | currency }}</li>
+          }
+        </ul>
+        <p class="total">Total: {{ o.totalAmount | currency }}</p>
+      </article>
+    } @empty {
+      <p>No orders yet.</p>
+    }
+  

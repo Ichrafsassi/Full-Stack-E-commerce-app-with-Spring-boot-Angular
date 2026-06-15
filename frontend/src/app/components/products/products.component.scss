@@ -1,0 +1,52 @@
+.subtitle {
+  color: var(--neo-muted);
+  margin: -0.75rem 0 1.5rem;
+  font-size: 0.9rem;
+}
+
+.neo-input {
+  flex: 1;
+  min-width: 160px;
+}
+
+.neo-select {
+  min-width: 180px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  color: var(--neo-magenta);
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.empty {
+  grid-column: 1 / -1;
+  color: var(--neo-muted);
+  padding: 2rem;
+  text-align: center;
+}
+
+.neo-card { position: relative; }
+
+.pill {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  background: var(--neo-magenta);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+}

@@ -1,0 +1,8 @@
+
+    .pwd-field { position: relative; }
+    .pwd-field .neo-input { width: 100%; padding-right: 4rem; }
+    .pwd-toggle {
+      position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%);
+      background: transparent; border: none; color: var(--neo-muted); font-size: 0.75rem; cursor: pointer;
+    }
+  

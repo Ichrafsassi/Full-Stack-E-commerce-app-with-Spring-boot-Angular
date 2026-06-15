@@ -1,0 +1,150 @@
+
+    <div class="admin-panel">
+      <div class="panel-head">
+        <h2>Order CMS Terminal</h2>
+        <button type="button" class="neo-btn primary sm" (click)="openCreate()">+ Dispatch New Order</button>
+      </div>
+
+      @if (flash()) {
+        <div class="flash-msg" [class.err]="flashErr()">{{ flash() }}</div>
+      }
+
+      @if (!orderList().length) {
+        <p class="hint">No orders yet. Place a test order or click "Dispatch New Order".</p>
+      } @else {
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Address</th>
+                <th>Items Count</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (o of orderList(); track o.id) {
+                <tr class="order-row">
+                  <td><strong class="neo-id">#{{ o.id }}</strong></td>
+                  <td class="email">{{ o.customerEmail }}</td>
+                  <td class="address">{{ o.shippingAddress }}</td>
+                  <td>{{ o.items.length }} items</td>
+                  <td class="total-amt">{{ o.totalAmount | currency }}</td>
+                  <td>
+                    <span class="status-badge" [class]="o.status.toLowerCase()">
+                      {{ o.status }}
+                    </span>
+                  </td>
+                  <td class="date-col">{{ o.createdAt | date:'short' }}</td>
+                  <td class="actions">
+                    <button type="button" class="btn-edit" (click)="openEdit(o)">Edit</button>
+                    <button type="button" class="btn-delete" (click)="del(o)">Delete</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+
+      <!-- Cyber Neo CRUD Modal -->
+      @if (showModal()) {
+        <div class="modal-backdrop" (click)="closeModal()">
+          <div class="modal-card" (click)="$event.stopPropagation()">
+            <header class="modal-header">
+              <h3>{{ isEdit() ? 'Modify Dispatch #' + currentOrderId : 'Initialize Cyber-Order' }}</h3>
+              <button class="close-btn" (click)="closeModal()">×</button>
+            </header>
+            
+            <form (ngSubmit)="saveOrder()" class="modal-form">
+              @if (modalError()) {
+                <div class="modal-err">{{ modalError() }}</div>
+              }
+
+              <div class="form-row">
+                @if (!isEdit()) {
+                  <label class="form-group flex-1">
+                    <span>Customer</span>
+                    <select class="neo-select" [(ngModel)]="customerEmail" name="customerEmail" required>
+                      <option value="" disabled>-- Select customer --</option>
+                      @for (u of userList(); track u.id) {
+                        <option [value]="u.email">{{ u.firstName }} {{ u.lastName }} ({{ u.email }})</option>
+                      }
+                    </select>
+                  </label>
+                }
+                <label class="form-group flex-1">
+                  <span>Shipping Address</span>
+                  <input type="text" class="neo-input" [(ngModel)]="shippingAddress" name="shippingAddress" required placeholder="Neo City, Sector 7" />
+                </label>
+              </div>
+
+              <div class="form-row">
+                <label class="form-group flex-1">
+                  <span>Order Status</span>
+                  <select class="neo-select" [(ngModel)]="status" name="status">
+                    @for (s of statuses; track s) {
+                      <option [value]="s">{{ s }}</option>
+                    }
+                  </select>
+                </label>
+              </div>
+
+              <!-- Interactive Line Items Manager -->
+              <div class="items-manager">
+                <h4>Quantum Items</h4>
+                
+                <div class="items-list">
+                  @for (item of formItems(); track $index) {
+                    <div class="item-pill">
+                      <span class="item-name">{{ item.name }}</span>
+                      <div class="qty-control">
+                        <button type="button" class="qty-btn" (click)="adjustItemQty($index, -1)">−</button>
+                        <span class="qty-val">{{ item.quantity }}</span>
+                        <button type="button" class="qty-btn" (click)="adjustItemQty($index, 1)">+</button>
+                      </div>
+                      <span class="item-price">{{ (item.price ?? 0) * item.quantity | currency }}</span>
+                      <button type="button" class="remove-item-btn" (click)="removeFormItem($index)">×</button>
+                    </div>
+                  } @empty {
+                    <p class="empty-items-text">No items registered in this order yet. Add items below.</p>
+                  }
+                </div>
+
+                <div class="add-item-bar">
+                  <div class="flex-grow-1">
+                    <select class="neo-select full-w" [(ngModel)]="selectedProductId" name="selectedProductId">
+                      <option [ngValue]="null" disabled>-- Select product --</option>
+                      @for (p of productList(); track p.id) {
+                        <option [ngValue]="p.id">{{ p.name }} ({{ p.price | currency }} — stock: {{ p.stock }})</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="qty-input-wrap">
+                    <input type="number" class="neo-input qty-input" [(ngModel)]="selectedQuantity" name="selectedQuantity" min="1" placeholder="Qty" />
+                  </div>
+                  <button type="button" class="neo-btn ghost add-btn" (click)="addFormItem()">+ Add</button>
+                </div>
+              </div>
+
+              <div class="form-summary">
+                <span>Calculated Energy Total:</span>
+                <strong class="grand-total">{{ calculateFormTotal() | currency }}</strong>
+              </div>
+
+              <footer class="modal-footer">
+                <button type="button" class="neo-btn ghost" (click)="closeModal()">Abort</button>
+                <button type="submit" class="neo-btn primary" [disabled]="loading() || formItems().length === 0">
+                  {{ loading() ? 'Saving...' : (isEdit() ? 'Sync Changes' : 'Place Order') }}
+                </button>
+              </footer>
+            </form>
+          </div>
+        </div>
+      }
+    </div>
+  

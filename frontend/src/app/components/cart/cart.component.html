@@ -1,0 +1,33 @@
+
+    <h1 class="neo-page-title">Shopping cart</h1>
+    @if (error()) {
+      <p class="admin-flash err">{{ error() }}</p>
+    }
+    @if (cart()?.items?.length) {
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Product</th><th>Qty</th><th>Line total</th><th></th></tr></thead>
+          <tbody>
+            @for (item of cart()!.items; track item.id) {
+              <tr>
+                <td>{{ item.productName }}</td>
+                <td class="qty">
+                  <button type="button" class="neo-btn ghost" (click)="qty(item.productId, item.quantity - 1)">−</button>
+                  <span>{{ item.quantity }}</span>
+                  <button type="button" class="neo-btn ghost" (click)="qty(item.productId, item.quantity + 1)">+</button>
+                </td>
+                <td>{{ item.lineTotal | currency }}</td>
+                <td class="actions">
+                  <button type="button" (click)="remove(item.productId)">Remove</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="total">Total: <strong>{{ cart()!.total | currency }}</strong></p>
+      <a routerLink="/checkout" class="neo-btn primary">Checkout</a>
+    } @else {
+      <p class="empty">Your cart is empty. <a routerLink="/products">Browse catalog</a></p>
+    }
+  

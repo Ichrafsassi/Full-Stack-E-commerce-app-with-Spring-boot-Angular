@@ -1,0 +1,7 @@
+
+    .qty { display: flex; align-items: center; gap: 0.35rem; }
+    .qty .neo-btn { padding: 0.2rem 0.5rem; min-width: 2rem; }
+    .total { margin: 1.25rem 0; font-size: 1.1rem; color: var(--neo-muted); }
+    .total strong { color: var(--neo-cyan); }
+    .empty { color: var(--neo-muted); }
+  

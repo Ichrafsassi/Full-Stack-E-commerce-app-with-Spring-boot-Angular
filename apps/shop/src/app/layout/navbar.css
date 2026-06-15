@@ -1,0 +1,8 @@
+.navbar {
+  backdrop-filter: blur(8px);
+}
+
+.navbar a.active {
+  color: #3b82f6;
+  font-weight: 600;
+}

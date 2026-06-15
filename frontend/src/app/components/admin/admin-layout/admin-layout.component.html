@@ -1,0 +1,19 @@
+
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <span class="brand">NERDS TECH CMS</span>
+        <nav class="admin-nav">
+          <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+          <a routerLink="/admin/products" routerLinkActive="active">Products</a>
+          <a routerLink="/admin/categories" routerLinkActive="active">Categories</a>
+          <a routerLink="/admin/orders" routerLinkActive="active">Orders</a>
+          <a routerLink="/admin/users" routerLinkActive="active">Users</a>
+          <a routerLink="/admin/cms" routerLinkActive="active">Content</a>
+        </nav>
+        <a routerLink="/" class="neo-btn ghost" style="margin-top:1rem;width:100%">Back to store</a>
+      </aside>
+      <section class="admin-main">
+        <router-outlet />
+      </section>
+    </div>
+  

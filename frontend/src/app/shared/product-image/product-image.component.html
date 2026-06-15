@@ -1,0 +1,22 @@
+
+    <div class="product-image" [class.loading]="loading()">
+      @if (!failed()) {
+        <img
+          [src]="displayUrl()"
+          [alt]="alt()"
+          loading="lazy"
+          decoding="async"
+          referrerpolicy="no-referrer"
+          (load)="loading.set(false)"
+          (error)="onError()"
+        />
+        @if (loading()) {
+          <div class="skeleton"></div>
+        }
+      } @else {
+        <div class="fallback" aria-hidden="true">
+          <span class="label">{{ alt() }}</span>
+        </div>
+      }
+    </div>
+  

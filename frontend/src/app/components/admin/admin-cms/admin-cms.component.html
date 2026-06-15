@@ -1,0 +1,37 @@
+
+    <div class="admin-panel">
+      <h2>CMS</h2>
+      @if (flash()) {
+        <p class="admin-flash" [class.err]="flashErr()" [class.ok]="!flashErr()">{{ flash() }}</p>
+      }
+      <form class="admin-form cms-form" (ngSubmit)="save()">
+        <input class="neo-input" [(ngModel)]="form.contentKey" name="key" placeholder="Key (e.g. home-hero)" required />
+        <input class="neo-input" [(ngModel)]="form.title" name="title" placeholder="Title" required />
+        <textarea class="neo-input" [(ngModel)]="form.body" name="body" rows="3" placeholder="Body"></textarea>
+        <select class="neo-select" [(ngModel)]="form.type" name="type">
+          @for (t of types; track t) { <option [value]="t">{{ t }}</option> }
+        </select>
+        <label class="check"><input type="checkbox" [(ngModel)]="form.published" name="pub" /> Published</label>
+        <button type="submit" class="neo-btn primary">{{ editId ? 'Update' : 'Create' }}</button>
+        @if (editId) { <button type="button" class="neo-btn ghost" (click)="cancel()">Cancel</button> }
+      </form>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead><tr><th>Key</th><th>Title</th><th>Type</th><th></th></tr></thead>
+          <tbody>
+            @for (c of items(); track c.id) {
+              <tr>
+                <td><code>{{ c.contentKey }}</code></td>
+                <td>{{ c.title }}</td>
+                <td>{{ c.type }}</td>
+                <td class="actions">
+                  <button type="button" (click)="startEdit(c)">Edit</button>
+                  <button type="button" (click)="del(c)">Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  

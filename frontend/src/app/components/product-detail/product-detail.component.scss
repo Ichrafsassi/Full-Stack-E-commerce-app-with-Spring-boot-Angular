@@ -1,0 +1,33 @@
+
+    .detail {
+      display: grid;
+      gap: 1.25rem;
+      max-width: 960px;
+    }
+    @media (min-width: 768px) {
+      .detail { grid-template-columns: 1fr 1fr; align-items: start; }
+    }
+    .detail-media :host ::ng-deep .product-image {
+      border-radius: 10px;
+      border: 1px solid var(--neo-border);
+      overflow: hidden;
+    }
+    .detail-info h1 {
+      font-size: 1.35rem;
+      margin: 0.35rem 0 0.75rem;
+      font-family: var(--neo-font-body);
+      font-weight: 600;
+      color: var(--neo-text);
+      background: none;
+      -webkit-text-fill-color: unset;
+    }
+    .cat {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--neo-magenta);
+      font-weight: 600;
+    }
+    .desc { color: var(--neo-muted); line-height: 1.6; font-size: 0.92rem; }
+    .stock { font-size: 0.85rem; color: var(--neo-muted); margin: 0.75rem 0; }
+  

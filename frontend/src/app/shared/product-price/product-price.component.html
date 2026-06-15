@@ -1,0 +1,14 @@
+
+    @if (pricing(); as pr) {
+      <div class="price-wrap">
+        @if (pr.onSale) {
+          <span class="sale">{{ pr.sale | currency }}</span>
+          <span class="was">{{ pr.original | currency }}</span>
+          <span class="badge">-{{ pr.discount }}%</span>
+          <span class="save">Save {{ pr.savings | currency }}</span>
+        } @else {
+          <span class="sale">{{ pr.sale | currency }}</span>
+        }
+      </div>
+    }
+  
